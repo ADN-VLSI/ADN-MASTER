@@ -1,3 +1,6 @@
 [submodule "adn_common"]
 	path = adn_common
 	url = https://github.com/ADN-VLSI/adn_common.git
+[submodule "adn_endec"]
+	path = adn_endec
+	url = https://github.com/ADN-VLSI/adn_endec.git
