@@ -1,5 +1,6 @@
 .PHONY: update_all
 update_all:
+	@git pull
 	@make -s update REPO=adn_common
 	@make -s update REPO=adn_endec
 	@git add . && git commit -m "Update all submodules" || echo "No changes to commit"
