@@ -8,22 +8,10 @@ permissions:
   pull-requests: write
 
 jobs:
-  # Gate job - runs first, provides baseline state (never pushes)
-  gate:
-    name: Gate (baseline state)
-    runs-on: [adn]
-    outputs:
-      changed: ${{ steps.set.outputs.changed }}
-    steps:
-      - id: set
-        run: echo "changed=false" >> "$GITHUB_OUTPUT"
-
-  # Job 1a: Check for @foez-bhai tags - runs on adn
+  # Job 1: Check for @foez-bhai tags - runs on adn (not skippable)
   check-tags:
     name: Check for foez-bhai tags
     runs-on: [adn]
-    needs: gate
-    if: ${{ needs.gate.outputs.changed != 'true' }}
     outputs:
       found: ${{ steps.tagged-files.outputs.found }}
       count: ${{ steps.tagged-files.outputs.count }}
@@ -72,12 +60,12 @@ jobs:
           echo "count=${#files[@]}" >> "$GITHUB_OUTPUT"
           printf 'Found %s tagged file(s).\n' "${#files[@]}"
 
-  # Job 1b: Process tags - only runs on review if check-tags found tags
+  # Job 2: Process tags - skippable (only runs if check-tags found tags)
   process-tags:
     name: Process foez-bhai tagged files
     runs-on: [review]
     needs: [check-tags]
-    if: ${{ needs.gate.outputs.changed != 'true' && needs.check-tags.outputs.found == 'true' }}
+    if: ${{ !cancelled() && !failed() && needs.check-tags.outputs.changed != 'true' && needs.check-tags.outputs.found == 'true' }}
     permissions:
       contents: write
       pull-requests: write
@@ -185,13 +173,12 @@ jobs:
             echo "Skipping reviewer assignment because the PR author and actor are the same user."
           fi
 
-  # Job 2: Update doc list - depends on gate, check-tags, and process-tags
-  # Condition: skip if ANY previous job (gate, check-tags, or process-tags) made changes
+  # Job 3: Update doc list - not skippable unless a prior job pushed a commit
   update_doc_list:
     name: Update Documentations & Lists
     runs-on: [adn]
-    needs: [gate, check-tags, process-tags]
-    if: ${{ needs.gate.outputs.changed != 'true' && needs.check-tags.outputs.changed != 'true' && needs.process-tags.outputs.changed != 'true' }}
+    needs: [check-tags, process-tags]
+    if: ${{ !cancelled() && !failed() && needs.check-tags.outputs.changed != 'true' && needs.process-tags.outputs.changed != 'true' }}
     permissions:
       contents: write
     outputs:
@@ -231,13 +218,12 @@ jobs:
           git push origin HEAD
           echo "changed=true" >> "$GITHUB_OUTPUT"
 
-  # Job 3: Regression - depends on all previous jobs
-  # Condition: skip if ANY previous job (gate, check-tags, process-tags, or update_doc_list) made changes
+  # Job 4: Regression - not skippable unless a prior job pushed a commit
   regression:
     name: Vivado Regression
     runs-on: [adn]
-    needs: [gate, check-tags, process-tags, update_doc_list]
-    if: ${{ needs.gate.outputs.changed != 'true' && needs.check-tags.outputs.changed != 'true' && needs.process-tags.outputs.changed != 'true' && needs.update_doc_list.outputs.changed != 'true' }}
+    needs: [check-tags, process-tags, update_doc_list]
+    if: ${{ !cancelled() && !failed() && needs.check-tags.outputs.changed != 'true' && needs.process-tags.outputs.changed != 'true' && needs.update_doc_list.outputs.changed != 'true' }}
 
     steps:
       - uses: actions/checkout@v5
