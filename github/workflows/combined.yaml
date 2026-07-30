@@ -1,8 +1,6 @@
-name: Combined CI Pipeline
+name: CI
+on: [push]
 
-on:
-  push:
-    branches: ["*"]
 
 permissions:
   contents: write
@@ -66,10 +64,8 @@ jobs:
     name: Process foez-bhai tagged files
     runs-on: [review]
     needs: [check-tags]
-    if: ${{ !cancelled() && !failed() && needs.check-tags.outputs.changed != 'true' && needs.check-tags.outputs.found == 'true' }}
-    permissions:
-      contents: write
-      pull-requests: write
+    if: ${{ needs.check-tags.outputs.changed != 'true' && needs.check-tags.outputs.found == 'true' }}
+
     outputs:
       changed: ${{ steps.commit.outputs.changed }}
 
@@ -179,7 +175,7 @@ jobs:
     name: Update Documentations & Lists
     runs-on: [adn]
     needs: [check-tags, process-tags]
-    if: ${{ !cancelled() && !failed() && needs.check-tags.outputs.changed != 'true' && needs.process-tags.outputs.changed != 'true' }}
+    if: ${{ needs.check-tags.outputs.changed != 'true' && needs.process-tags.outputs.changed != 'true' }}
     permissions:
       contents: write
     outputs:
@@ -224,7 +220,7 @@ jobs:
     name: Vivado Regression
     runs-on: [adn]
     needs: [check-tags, process-tags, update_doc_list]
-    if: ${{ !cancelled() && !failed() && needs.check-tags.outputs.changed != 'true' && needs.process-tags.outputs.changed != 'true' && needs.update_doc_list.outputs.changed != 'true' }}
+    if: ${{ needs.check-tags.outputs.changed != 'true' && needs.process-tags.outputs.changed != 'true' && needs.update_doc_list.outputs.changed != 'true' }}
 
     steps:
       - uses: actions/checkout@v4
