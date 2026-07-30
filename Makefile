@@ -12,11 +12,13 @@ update_all:
 update:
 	@echo "Updating submodule: $(REPO)"
 	@cd $(REPO) && git checkout main
+	@cd $(REPO) && git reset --hard $$(git rev-list --max-parents=0 HEAD)
+	@cd $(REPO) && git pull
 	@cd $(REPO) && git submodule deinit -f .
 	@cd $(REPO) && git submodule update --init
 	@rm -rf $(REPO)/.github
 	@cp -r github $(REPO)/.github
 	@mv $(REPO)/.github/Makefile $(REPO)/Makefile
-	@cd $(REPO) && git submodule foreach 'git checkout main && git pull'
+	@cd $(REPO) && git submodule foreach 'git checkout main && git reset --hard $$(git rev-list --max-parents=0 HEAD) && git pull'
 	@cd $(REPO) && git add . && git commit -m "Update submodule: $(REPO)" || echo "No changes to commit"
 	@cd $(REPO) && git push origin main
