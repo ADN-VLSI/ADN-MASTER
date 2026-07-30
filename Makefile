@@ -17,6 +17,6 @@ update:
 	@rm -rf $(REPO)/.github
 	@cp -r github $(REPO)/.github
 	@mv $(REPO)/.github/Makefile $(REPO)/Makefile
-	@cd $(REPO) && git submodule foreach 'git checkout main && git pull origin main'
+	@cd $(REPO) && git submodule foreach 'git checkout main && git pull'
 	@cd $(REPO) && git add . && git commit -m "Update submodule: $(REPO)" || echo "No changes to commit"
 	@cd $(REPO) && git push origin main
