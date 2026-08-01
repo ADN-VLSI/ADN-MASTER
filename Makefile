@@ -14,6 +14,10 @@ update:
 	@cd $(REPO) && git checkout main
 	@cd $(REPO) && git reset --hard $$(git rev-list --max-parents=0 HEAD)
 	@cd $(REPO) && git pull
+	@while [ $$(curl -s https://api.github.com/repos/$(REPO)/actions/runs | jq '.workflow_runs | map(select(.status == "in_progress" or .status == "queued")) | length') -gt 0 ]; do \
+		echo "Waiting for GitHub Actions to finish for repository $(REPO)..."; \
+		sleep 10; \
+	done
 	@cd $(REPO) && git submodule deinit -f .
 	@cd $(REPO) && git submodule update --init
 	@rm -rf $(REPO)/.github
