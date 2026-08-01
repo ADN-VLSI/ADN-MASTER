@@ -50,23 +50,7 @@
         "do_not_enforce_on_create": false,
         "required_status_checks": [
           {
-            "context": "Update Documentations & Lists",
-            "integration_id": 15368
-          },
-          {
-            "context": "Search tags and create PR",
-            "integration_id": 15368
-          },
-          {
-            "context": "regression",
-            "integration_id": 15368
-          },
-          {
-            "context": "Check for @foez-bhai text",
-            "integration_id": 15368
-          },
-          {
-            "context": "update_doc_list",
+            "context": "CICD",
             "integration_id": 15368
           }
         ]
