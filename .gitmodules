@@ -7,3 +7,9 @@
 [submodule "adn_uart"]
 	path = adn_uart
 	url = https://github.com/ADN-VLSI/adn_uart.git
+[submodule "adn_apb"]
+	path = adn_apb
+	url = https://github.com/ADN-VLSI/adn_apb.git
+[submodule "adn_axi"]
+	path = adn_axi
+	url = https://github.com/ADN-VLSI/adn_axi.git

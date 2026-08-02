@@ -4,6 +4,8 @@ update_all:
 	@git submodule deinit -f .
 	@git submodule update --init
 	@make -s update REPO=adn_common
+	@make -s update REPO=adn_apb
+	@make -s update REPO=adn_axi
 	@make -s update REPO=adn_endec
 	@make -s update REPO=adn_uart
 	@git add . && git commit -m "Update all submodules" || echo "No changes to commit"
