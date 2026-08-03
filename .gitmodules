@@ -13,3 +13,6 @@
 [submodule "adn_axi"]
 	path = adn_axi
 	url = https://github.com/ADN-VLSI/adn_axi.git
+[submodule "adn_clk_rst"]
+	path = adn_clk_rst
+	url = https://github.com/ADN-VLSI/adn_clk_rst.git
