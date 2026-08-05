@@ -1,7 +1,7 @@
 .PHONY: update_all
 update_all:
 	@git pull
-	@git submodule deinit -f .
+	@git submodule deinit -f --all
 	@git submodule update --init
 	@make -s update REPO=adn_common
 	@make -s update REPO=adn_apb
@@ -18,7 +18,7 @@ update:
 	@cd $(REPO) && git checkout main
 	@cd $(REPO) && git reset --hard $$(git rev-list --max-parents=0 HEAD)
 	@cd $(REPO) && git pull
-	@cd $(REPO) && git submodule deinit -f .
+	@cd $(REPO) && git submodule deinit -f --all
 	@cd $(REPO) && git submodule update --init
 	@rm -rf $(REPO)/.github
 	@cp -r github $(REPO)/.github
