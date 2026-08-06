@@ -16,3 +16,6 @@
 [submodule "adn_clk_rst"]
 	path = adn_clk_rst
 	url = https://github.com/ADN-VLSI/adn_clk_rst.git
+[submodule "template"]
+	path = template
+	url = https://github.com/ADN-VLSI/template.git

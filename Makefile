@@ -4,6 +4,7 @@ update_all:
 	@git submodule deinit -f --all
 	@git submodule update --init
 	@make -s update REPO=adn_common
+	@make -s update REPO=template
 	@make -s update REPO=adn_apb
 	@make -s update REPO=adn_axi
 	@make -s update REPO=adn_clk_rst
