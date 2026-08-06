@@ -1,9 +1,9 @@
 {
-  "id": 19203034,
+  "id": 20469803,
   "name": "main",
   "target": "branch",
   "source_type": "Repository",
-  "source": "ADN-VLSI/adn_common",
+  "source": "ADN-VLSI/adn_clk_rst",
   "enforcement": "active",
   "conditions": {
     "ref_name": {
@@ -21,15 +21,23 @@
       "type": "creation"
     },
     {
-      "type": "update"
-    },
-    {
       "type": "pull_request",
       "parameters": {
         "required_approving_review_count": 0,
         "dismiss_stale_reviews_on_push": false,
-        "required_reviewers": [],
-        "require_code_owner_review": true,
+        "required_reviewers": [
+          {
+            "minimum_approvals": 1,
+            "file_patterns": [
+              "*"
+            ],
+            "reviewer": {
+              "id": 18823989,
+              "type": "Team"
+            }
+          }
+        ],
+        "require_code_owner_review": false,
         "dismissal_restriction": {
           "enabled": false,
           "allowed_actors": []
@@ -59,8 +67,13 @@
   ],
   "bypass_actors": [
     {
-      "actor_id": 119846826,
-      "actor_type": "User",
+      "actor_id": 18823989,
+      "actor_type": "Team",
+      "bypass_mode": "pull_request"
+    },
+    {
+      "actor_id": 18823995,
+      "actor_type": "Team",
       "bypass_mode": "always"
     }
   ]
