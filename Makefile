@@ -1,7 +1,7 @@
 .PHONY: update_all
 update_all:
-	@git pull
 	@git submodule deinit -f --all
+	@git pull
 	@git submodule update --init
 	@make -s update REPO=adn_common
 	@make -s update REPO=template
