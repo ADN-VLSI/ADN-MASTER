@@ -12,6 +12,8 @@ update_all:
 	@make -s update REPO=adn_uart
 	@git add . && git commit -m "Update all submodules" || echo "No changes to commit"
 	@git push origin main
+	@clear
+	@git status
 
 .PHONY: update
 update:
