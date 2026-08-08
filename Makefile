@@ -26,8 +26,8 @@ update:
 	@rm -rf $(REPO)/.github
 	@cp -r github $(REPO)/.github
 	@mv $(REPO)/.github/Makefile $(REPO)/Makefile
-	@chmod +x $(REPO)/.github/regression.sh
 	@mv $(REPO)/.github/.gitattributes $(REPO)/.gitattributes
 	@cd $(REPO) && git submodule foreach 'git checkout main && git reset --hard $$(git rev-list --max-parents=0 HEAD) && git pull'
+	@chmod +x $(REPO)/.github/regression.sh
 	@cd $(REPO) && git add . && git commit -m "Update submodule: $(REPO)" || echo "No changes to commit"
 	@cd $(REPO) && git push origin main
