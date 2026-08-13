@@ -19,3 +19,6 @@
 [submodule "template"]
 	path = template
 	url = https://github.com/ADN-VLSI/template.git
+[submodule "adn_riscv"]
+	path = adn_riscv
+	url = https://github.com/ADN-VLSI/adn_riscv.git

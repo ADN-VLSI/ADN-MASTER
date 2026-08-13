@@ -3,13 +3,18 @@ update_all:
 	@git submodule deinit -f --all
 	@git pull
 	@git submodule update --init
+####################################################################################################
 	@make -s update REPO=adn_common
+####################################################################################################
 	@make -s update REPO=template
+####################################################################################################
 	@make -s update REPO=adn_apb
 	@make -s update REPO=adn_axi
 	@make -s update REPO=adn_clk_rst
 	@make -s update REPO=adn_endec
 	@make -s update REPO=adn_uart
+	@make -s update REPO=adn_riscv
+####################################################################################################
 	@git add . && git commit -m "Update all submodules" || echo "No changes to commit"
 	@git push origin main
 	@clear
