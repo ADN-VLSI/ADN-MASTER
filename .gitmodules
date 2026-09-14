@@ -22,3 +22,6 @@
 [submodule "adn_riscv"]
 	path = adn_riscv
 	url = https://github.com/ADN-VLSI/adn_riscv.git
+[submodule "adn_memss"]
+	path = adn_memss
+	url = https://github.com/ADN-VLSI/adn_memss.git
